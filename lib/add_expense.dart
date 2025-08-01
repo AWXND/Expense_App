@@ -50,10 +50,7 @@ class _AddExpenseState extends State<AddExpense> {
           Row(
             children: [
               ElevatedButton(
-                onPressed: () {
-                  print(_titleController.text);
-                  print(_amountController.text);
-                },
+                onPressed: () {},
                 child: Text('Save Expense'),
               ),
               Spacer(),
