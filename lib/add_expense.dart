@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class AddExpense extends StatefulWidget {
   const AddExpense({super.key});
@@ -11,6 +12,25 @@ class AddExpense extends StatefulWidget {
 class _AddExpenseState extends State<AddExpense> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
+
+  void _presetPickDate() {
+    final dateTime = DateTime.now();
+    final firstDate = DateTime(
+      dateTime.year,
+      dateTime.month,
+      dateTime.day,
+    );
+    final lastDate = DateTime(
+      dateTime.year,
+      dateTime.month,
+      dateTime.day + 14,
+    );
+    showDatePicker(
+      context: context,
+      firstDate: firstDate,
+      lastDate: lastDate,
+    );
+  }
 
   @override
   void dispose() {
@@ -37,27 +57,53 @@ class _AddExpenseState extends State<AddExpense> {
             maxLength: 50,
             decoration: InputDecoration(label: Text('Title')),
           ),
-          TextField(
-            controller: _amountController,
-            keyboardType: TextInputType.number,
-            maxLength: 50,
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _amountController,
+                  keyboardType: TextInputType.number,
+                  maxLength: 50,
 
-            decoration: InputDecoration(
-              label: Text('amount'),
-              prefixText: 'Rp.',
-            ),
+                  decoration: InputDecoration(
+                    label: Text('amount'),
+                    prefixText: 'Rp.',
+                  ),
+                ),
+              ),
+              SizedBox(width: 16),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text('Select Date'),
+                    IconButton(
+                      onPressed: () {
+                        _presetPickDate();
+                      },
+                      icon: HugeIcon(
+                        icon: HugeIcons.strokeRoundedCalendar01,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
           Row(
             children: [
               ElevatedButton(
-                onPressed: () {
-                  print(_titleController.text);
-                  print(_amountController.text);
-                },
+                onPressed: () {},
                 child: Text('Save Expense'),
               ),
               Spacer(),
-              ElevatedButton(onPressed: () {}, child: Text('Close')),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Close'),
+              ),
             ],
           ),
         ],
